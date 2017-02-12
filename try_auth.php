@@ -1,7 +1,6 @@
 <?php
 
 require_once "common.php";
-session_start();
 
 function getOpenIDURL() {
     // Render a default page if we got a submission without an openid
@@ -11,7 +10,6 @@ function getOpenIDURL() {
         include 'index.php';
         exit(0);
     }
-
     return $_GET['openid_identifier'];
 }
 
@@ -37,12 +35,7 @@ function run() {
         $auth_request->addExtension($sreg_request);
     }
 
-	$policy_uris = null;
-	if (isset($_GET['policies'])) {
-    	$policy_uris = $_GET['policies'];
-	}
-
-    $pape_request = new Auth_OpenID_PAPE_Request($policy_uris);
+    $pape_request = new Auth_OpenID_PAPE_Request(null);
     if ($pape_request) {
         $auth_request->addExtension($pape_request);
     }

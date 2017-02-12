@@ -1,7 +1,6 @@
 <?php
 
 require_once "common.php";
-session_start();
 
 function escape($thing) {
     return htmlentities($thing);
@@ -30,9 +29,13 @@ function run() {
         $esc_identity = escape($openid);
 
         $success = sprintf('You have successfully verified ' .
-                           '<a href="%s">%s</a> as your identity.',
-                           $esc_identity, $esc_identity);
+                           '<a href="%s">%s</a> as your identity with login %s.',
+                           $esc_identity, $esc_identity, substr($esc_identity, 37));
 
+	if(strcmp(substr($esc_identity, 0, 37), "https://www.opensuse.org/openid/user/") == 0) {
+	$_SESSION['login'] = substr($esc_identity, 37);
+	}
+	
         if ($response->endpoint->canonicalID) {
             $escaped_canonicalID = escape($response->endpoint->canonicalID);
             $success .= '  (XRI CanonicalID: '.$escaped_canonicalID.') ';
@@ -57,37 +60,6 @@ function run() {
                 "'.";
         }
 
-	$pape_resp = Auth_OpenID_PAPE_Response::fromSuccessResponse($response);
-
-	if ($pape_resp) {
-            if ($pape_resp->auth_policies) {
-                $success .= "<p>The following PAPE policies affected the authentication:</p><ul>";
-
-                foreach ($pape_resp->auth_policies as $uri) {
-                    $escaped_uri = escape($uri);
-                    $success .= "<li><tt>$escaped_uri</tt></li>";
-                }
-
-                $success .= "</ul>";
-            } else {
-                $success .= "<p>No PAPE policies affected the authentication.</p>";
-            }
-
-            if ($pape_resp->auth_age) {
-                $age = escape($pape_resp->auth_age);
-                $success .= "<p>The authentication age returned by the " .
-                    "server is: <tt>".$age."</tt></p>";
-            }
-
-            if ($pape_resp->nist_auth_level) {
-                $auth_level = escape($pape_resp->nist_auth_level);
-                $success .= "<p>The NIST auth level returned by the " .
-                    "server is: <tt>".$auth_level."</tt></p>";
-            }
-
-	} else {
-            $success .= "<p>No PAPE response was sent by the provider.</p>";
-	}
     }
 
     include 'index.php';

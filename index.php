@@ -4,8 +4,8 @@ require_once "members.php";
 
 if(($_POST['action'] == 'vote') && isset($_SESSION['login'])) {
    if(in_array($_SESSION['login'], $members)) {
-   if(count($_POST['response']) > 2) {
-      $error = "Too many votes, you can choose only two candidates";
+   if(count($_POST['response']) != 2) {
+      $error = "You have to choose exactly two candidates!";
    } else {
       file_put_contents(dirname(__FILE__) . "/votes/" . md5($_SESSION['login']), "voted:" . implode(':', $_POST['response']) . "\n");
       $success = "Your vote has been casted! You can change your mind till the end of ellection.";
@@ -74,7 +74,7 @@ global $pape_policy_uris;
     <?php } else { ?>
     <div id="vote-form">
       <form method="post" action="index.php">
-        Cast up to 2 options as <?php print $_SESSION['login']; ?>:<br/>
+        Cast exactly 2 votes as <?php print $_SESSION['login']; ?>:<br/>
         <label><input type="checkbox" value="aaron" name="response[]" />Aaron Luna <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00078.html">announcement</a> <a href="https://en.opensuse.org/User:Aaronluna75">profile</a> <a href="http://www.opensusemexico.com/">platform</a></label><br/>
         <label><input type="checkbox" value="sarah" name="response[]" />Sarah Julia Kriesch <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00076.html">announcement</a> <a href="https://connect.opensuse.org//pg/profile/AdaLovelace">profile</a> <a href="https://sarah-julia-kriesch.eu/2016/12/28/running-for-the-opensuse-board/">platform</a></label><br/>
 	<label><input type="checkbox" value="christian" name="response[]" />Christian Boltz <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00081.html">announcement</a> <a href="https://connect.opensuse.org/pg/profile/cboltz">profile</a> <a href="http://blog.cboltz.de/archives/73-Another-openSUSE-Board-candidate-;.html">platform</a></label><br/>

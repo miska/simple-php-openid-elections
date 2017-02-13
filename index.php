@@ -74,7 +74,7 @@ global $pape_policy_uris;
     <?php } else { ?>
     <div id="vote-form">
       <form method="post" action="index.php">
-        Cast exactly 2 votes as <?php print $_SESSION['login']; ?>:<br/>
+        Cast exactly 2 votes as <?php print $_SESSION['login']; ?> (works only for openSUSE members):<br/>
         <label><input type="checkbox" value="aaron" name="response[]" />Aaron Luna <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00078.html">announcement</a> <a href="https://en.opensuse.org/User:Aaronluna75">profile</a> <a href="http://www.opensusemexico.com/">platform</a></label><br/>
         <label><input type="checkbox" value="sarah" name="response[]" />Sarah Julia Kriesch <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00076.html">announcement</a> <a href="https://connect.opensuse.org//pg/profile/AdaLovelace">profile</a> <a href="https://sarah-julia-kriesch.eu/2016/12/28/running-for-the-opensuse-board/">platform</a></label><br/>
 	<label><input type="checkbox" value="christian" name="response[]" />Christian Boltz <a href="https://lists.opensuse.org/opensuse-project/2016-12/msg00081.html">announcement</a> <a href="https://connect.opensuse.org/pg/profile/cboltz">profile</a> <a href="http://blog.cboltz.de/archives/73-Another-openSUSE-Board-candidate-;.html">platform</a></label><br/>

@@ -3,11 +3,11 @@ require_once "common.php";
 require_once "members.php";
 
 if(($_POST['action'] == 'vote') && isset($_SESSION['login'])) {
-   if(in_array($_SESSION['login'], $members)) {
+   if(in_array(strtolower($_SESSION['login']), $members)) {
    if(count($_POST['response']) != 2) {
       $error = "You have to choose exactly two candidates!";
    } else {
-      file_put_contents(dirname(__FILE__) . "/votes/" . md5($_SESSION['login']), "voted:" . implode(':', $_POST['response']) . "\n");
+      file_put_contents(dirname(__FILE__) . "/votes/" . md5(strtolower($_SESSION['login'])), "voted:" . implode(':', $_POST['response']) . "\n");
       $success = "Your vote has been casted! You can change your mind till the end of ellection.";
    }} else {
       $error = "You are not a member";
